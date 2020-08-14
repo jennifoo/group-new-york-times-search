@@ -1,30 +1,43 @@
-var authKey = "Place-holder";
+
+/* ------------------------ GLOBAL VARIABLES ------------------------ */
+var authKey = "&api-key=" + "UJpplAloudoeIeI6ao2Q1YWDU17MuBsQ";
+
+var queryInput = "";
+var query = "?q=" + queryInput;
+
+var inputStartYear = ""; //user to enter start date
+var startYear = "&begin_date=" + inputStartYear;
+
+var inputEndYear = ""; //user to enter end date
+var endYear = "&end_date=" + inputEndYear;
 
 
-var queryTerm = "";
-var numResults = 0;
-var startYear = 0;
-var endYear = 0;
+var baseURL = "http://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey;
 
 
-var queryURLBase = "http://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey;
+/* ------------------------ FUNCTIONS ------------------------ */
 
+runQuery("bear", 1990, 2020);
 
+function runQuery(searchTerm, enterStartYear, enterEndYear) {
 
-function runQuery(numArticles, queryURL) {
+  var finalURL = baseURL + searchTerm + enterStartYear + enterEndYear + authKey;
 
-  
   $.ajax({
-    url: queryURL,
+    url: finalURL,
     method: "GET"
-  }).done(function(NYTData) {
+  }).then(function(NYTData) {
 
-    
-    console.log("------------------");
-    console.log(queryURL);
-    console.log("------------------");
-    console.log(numArticles);
-    console.log(NYTData);
+    var result = NYTData.response.docs;
 
-   
+    console.log(finalURL);
+    // console.log(result);
+
+
     $("#well-section").empty();
+
+  });
+}
+
+// https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=yourkey
+// q = query
